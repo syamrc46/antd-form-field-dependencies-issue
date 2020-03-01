@@ -7,9 +7,9 @@ export default function App(props) {
 		const [ form ] = Form.useForm();
 
 		const initialValues = {
-			password: {
-				old: null,
-				new: null
+			security: {
+				password: null,
+				confirm: null
 			}
 		};
 
@@ -29,32 +29,32 @@ export default function App(props) {
 				}}
 			>
 				<Form.Item
-					name={[ 'password', 'old' ]}
-					label="Old password"
+					name={[ 'security', 'password' ]}
+					label="Password"
 					rules={[
 						{
 							required: true,
-							message: 'Old password is required'
+							message: 'Password is required'
 						}
 					]}
 				>
 					<Input />
 				</Form.Item>
 				<Form.Item
-					name={[ 'password', 'new' ]}
-					label="New password"
-					dependencies={[ 'password' ]}
+					name={[ 'security', 'confirm' ]}
+					label="Confirm"
+					dependencies={['security', 'password' ]}
 					rules={[
 						{
 							required: true,
-							message: 'New password is required'
+							message: 'Confirm password is required'
 						},
 						({ getFieldValue }) => ({
 							validator(rule, value) {
-								if (!value || getFieldValue([ 'password', 'old' ]) !== value) {
+								if (!value || getFieldValue([ 'security', 'password' ]) !== value) {
 									return Promise.resolve();
 								}
-								return Promise.reject('Old password and new password should be different');
+								return Promise.reject('The two passwords that you entered do not match!');
 							}
 						})
 					]}
